@@ -150,10 +150,55 @@ func (a *App) deleteProduct(w http.ResponseWriter, r *http.Request) {
 	respondWithJSON(w, http.StatusOK, map[string]string{"result": "success"})
 }
 
+func (a *App) getProductsCount(w http.ResponseWriter, r *http.Request) {
+	count, err := getProductsCount(a.DB)
+	if err != nil {
+		respondWithError(w, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	respondWithJSON(w, http.StatusOK, map[string]int{"count": count})
+}
+
+func (a *App) getProductBins(w http.ResponseWriter, r *http.Request) {
+	pricebins, err := getProductBins(a.DB)
+	if err != nil {
+		respondWithError(w, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	respondWithJSON(w, http.StatusOK, pricebins)
+}
+
+func (a *App) searchProducts(w http.ResponseWriter, r *http.Request) {
+	count, _ := strconv.Atoi(r.FormValue("count"))
+	start, _ := strconv.Atoi(r.FormValue("start"))
+	search := r.FormValue("search")
+
+	if count > 10 || count < 1 {
+		count = 10
+	}
+	if start < 0 {
+		start = 0
+	}
+
+	products, err := searchProducts(a.DB, search, start, count)
+	if err != nil {
+		respondWithError(w, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	respondWithJSON(w, http.StatusOK, products)
+}
+
 func (a *App) initializeRoutes() {
 	a.Router.HandleFunc("/products", a.getProducts).Methods("GET")
 	a.Router.HandleFunc("/product", a.createProduct).Methods("POST")
 	a.Router.HandleFunc("/product/{id:[0-9]+}", a.getProduct).Methods("GET")
 	a.Router.HandleFunc("/product/{id:[0-9]+}", a.updateProduct).Methods("PUT")
 	a.Router.HandleFunc("/product/{id:[0-9]+}", a.deleteProduct).Methods("DELETE")
+
+	a.Router.HandleFunc("/products/count", a.getProductsCount).Methods("GET")
+	a.Router.HandleFunc("/products/bins", a.getProductBins).Methods("GET")
+	a.Router.HandleFunc("/products/search", a.searchProducts).Methods("GET")
 }
