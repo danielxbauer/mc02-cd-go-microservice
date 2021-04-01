@@ -87,7 +87,6 @@ func TestGetNonExistentProduct(t *testing.T) {
 }
 
 func TestCreateProduct(t *testing.T) {
-
 	clearTable()
 
 	var jsonStr = []byte(`{"name":"test product", "price": 11.22}`)
@@ -138,7 +137,6 @@ func addProducts(count int) {
 }
 
 func TestUpdateProduct(t *testing.T) {
-
 	clearTable()
 	addProducts(1)
 
