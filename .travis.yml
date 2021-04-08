@@ -12,8 +12,10 @@ env:
   - APP_DB_USERNAME="postgres" APP_DB_PASSWORD="" APP_DB_NAME="postgres"
 
 script:
+  - cd src
+
   # Build
-  - cd src && go build -v
+  - go build -v
 
   # Test
-  - cd src && go test -v
+  - go test -v
