@@ -1,4 +1,4 @@
-# MC02 - Continuous Delivery - Go Microservice
+# [![Build Status](https://travis-ci.com/danielxbauer/mc02-cd-go-microservice.svg?branch=main)](https://travis-ci.com/danielxbauer/mc02-cd-go-microservice) MC02 - Continuous Delivery - Go Microservice
 Following tutorial from: https://semaphoreci.com/community/tutorials/building-and-testing-a-rest-api-in-go-with-gorilla-mux-and-postgresql
 
 ## Database
