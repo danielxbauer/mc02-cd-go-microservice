@@ -8,6 +8,11 @@ go:
 services:
   - postgresql
 
+env:
+  - APP_DB_USERNAME="postgres"
+  - APP_DB_PASSWORD=""
+  - APP_DB_NAME="postgres"
+
 script:
   # Test the code
   - cd src && go test -v ./...
