@@ -1,0 +1,15 @@
+os: linux
+
+language: go
+
+go:
+  - 1.16.x
+
+services:
+  - postgresql
+
+script:
+  # Test the code
+  - cd ../src && go test -v ./...
+
+  # Build the code
